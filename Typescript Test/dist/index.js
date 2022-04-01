@@ -58,7 +58,7 @@ client.on("messageCreate", function (message) {
     //    message.channel.send(`Yo waddup. Het prefix van mij is ${Prefix}. Syntax ziet er als volgt uit: ${TextEncodings.graveAccent}${Prefix} [Opdracht] -Argument1 -Argument2 -Argument3 [ArgumentWaarde] ${TextEncodings.graveAccent}. Oktay is schattig btw`);
     //}
 });
-client.on("message", function (message) {
+client.on("messageCreate", function (message) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
         if (message.author.id === ((_a = client.user) === null || _a === void 0 ? void 0 : _a.id) || message.author.bot)

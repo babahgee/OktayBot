@@ -8,7 +8,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "echo off && cls && npm run build && node -r dotenv/config ./dist/index.js"
+    "start": "echo off && cls && npm run build && node -r dotenv/config ./dist/index.js",
+    "install": "npm install @discordjs/builders @discordjs/opus @discordjs/rest @discordjs/voice @types/node canvas colors discord-api-types discord-player discord-tts discord.js dotenv ffmpeg genius-lyrics google-images mongoose openweather-apis openweathermap-node typescript"
   },
   "dependencies": {
     "@discordjs/builders": "^0.12.0",
@@ -16,12 +17,15 @@
     "@discordjs/rest": "^0.3.0",
     "@discordjs/voice": "^0.8.0",
     "@types/node": "^17.0.23",
+    "canvas": "^2.9.1",
     "colors": "^1.4.0",
     "discord-api-types": "^0.30.0",
     "discord-player": "^5.2.2",
+    "discord-tts": "^1.2.1",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
     "ffmpeg": "^0.0.4",
+    "genius-lyrics": "^4.3.6",
     "google-images": "^2.1.0",
     "mongoose": "^6.2.9",
     "openweather-apis": "^4.4.2",

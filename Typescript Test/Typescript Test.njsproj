@@ -33,7 +33,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".env" />
+    <Content Include="dist\audio\doet.mp3" />
+    <Content Include="dist\audio\mjauw.mp3" />
+    <Content Include="dist\audio\ooohh.mp3" />
     <Content Include="dist\modules\mannen.txt" />
+    <Content Include="init.bat" />
+    <Content Include="modules\commands\tts.ts" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="tsconfig.json" />
@@ -43,13 +48,17 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="modules\commands\help.ts" />
-    <TypeScriptCompile Include="modules\commands\join.ts" />
+    <TypeScriptCompile Include="modules\commands\lyrics.ts" />
+    <TypeScriptCompile Include="modules\commands\play.ts" />
+    <TypeScriptCompile Include="modules\commands\queue.ts" />
+    <TypeScriptCompile Include="modules\commands\skip.ts" />
     <TypeScriptCompile Include="modules\commands\weather.ts" />
     <TypeScriptCompile Include="modules\utils.ts" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="dist\" />
     <Folder Include="dist\modules\" />
+    <Folder Include="dist\audio\" />
     <Folder Include="modules\" />
     <Folder Include="modules\commands\" />
   </ItemGroup>

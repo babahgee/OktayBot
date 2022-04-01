@@ -1,5 +1,6 @@
 import * as DiscordJS from "discord.js";
 import * as DiscordPlayer from "discord-player";
+import * as DiscordVoice from "@discordjs/voice";
 import * as FS from "fs";
 import * as Path from "path";
 import * as URL from "url";
@@ -23,8 +24,6 @@ const player = new DiscordPlayer.Player(client, {
     }
 });
 
-
-
 const commands: Array<string> = FS.readdirSync(Path.join(__dirname, "modules", "commands"), { encoding: "utf-8" });
 
 
@@ -37,7 +36,7 @@ client.on("messageCreate", function (message: DiscordJS.Message) {
 
 });
 
-client.on("message", async function (message: DiscordJS.Message) {
+client.on("messageCreate", async function (message: DiscordJS.Message) {
 
     if (message.author.id === client.user?.id || message.author.bot) return;
     if (!message.content.startsWith(Prefix)) return;
@@ -66,8 +65,6 @@ client.on("message", async function (message: DiscordJS.Message) {
 
     await commandExecution.Execute(message, commandArguments, client, player);
 });
-
-
 
 client.on("ready", function (client: DiscordJS.Client) {
 
