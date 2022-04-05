@@ -30,6 +30,7 @@
     "mongoose": "^6.2.9",
     "openweather-apis": "^4.4.2",
     "openweathermap-node": "^1.2.0",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.3",
+    "webp-converter": "^2.3.3"
   }
 }

@@ -8,7 +8,7 @@ import { Player } from "discord-player";
 
 export function Execute(message: Message, commandArguments: Array<string>, client: Client, player: Player) {
 
-    const people: Array<string> = fs.readFileSync(path.join(__dirname, "../", "mannen.txt"), {encoding: "utf-8"}).split("\n");
+    const people: Array<string> = fs.readFileSync(path.join(__dirname, "../../", "data", "mannen.txt"), {encoding: "utf-8"}).split("\n");
 
     const randomDude = people[Math.floor(Math.random() * people.length)];
 

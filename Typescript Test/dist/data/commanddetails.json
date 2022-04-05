@@ -1,0 +1,7 @@
+[
+  {
+    "commandname": "help",
+    "description": "Weergeeft een volledige gids met alle beschikbare uitvoerbare opdrachten voor gebruikers.",
+    "arguments": ["[opdracht naam]", "alles", "dev"]
+  }
+]
