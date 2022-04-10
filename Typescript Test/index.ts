@@ -9,7 +9,8 @@ import "colors";
 
 import { TextEncodings, CommandExecution, Prefix } from "./modules/utils";
 
-const client = new DiscordJS.Client({
+
+const client: DiscordJS.Client = new DiscordJS.Client({
     intents: [
         DiscordJS.Intents.FLAGS.GUILDS,
         DiscordJS.Intents.FLAGS.GUILD_MEMBERS,
@@ -17,7 +18,7 @@ const client = new DiscordJS.Client({
         DiscordJS.Intents.FLAGS.GUILD_VOICE_STATES,
     ]
 });
-const player = new DiscordPlayer.Player(client, {
+const player: DiscordPlayer.Player = new DiscordPlayer.Player(client, {
     ytdlOptions: {
         quality: "highestaudio",
         highWaterMark: 1 << 25
@@ -27,14 +28,8 @@ const player = new DiscordPlayer.Player(client, {
 const commands: Array<string> = FS.readdirSync(Path.join(__dirname, "modules", "commands"), { encoding: "utf-8" });
 
 
-client.on("messageCreate", function (message: DiscordJS.Message) {
-
-    //if (message.mentions.has(client.user.id)) {
-    //    message.channel.send(`Yo waddup. Het prefix van mij is ${Prefix}. Syntax ziet er als volgt uit: ${TextEncodings.graveAccent}${Prefix} [Opdracht] -Argument1 -Argument2 -Argument3 [ArgumentWaarde] ${TextEncodings.graveAccent}. Oktay is schattig btw`);
-    //}
 
 
-});
 
 client.on("messageCreate", async function (message: DiscordJS.Message) {
 
@@ -80,4 +75,8 @@ client.on("ready", function (client: DiscordJS.Client) {
 });
 
 
-client.login(process.env.BOT_TOKEN);
+client.login(process.env.BOT_TOKEN).then(function (value: string) {
+
+    console.log(`Client succesfully logged in.`.green);
+
+});

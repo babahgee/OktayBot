@@ -1,0 +1,5 @@
+FOUTCODE 404
+
+------------------
+
+Kan bestand en -of URL niet vinden. Het zou mogelijk verwijderd of verplaats zijn, neem contact op met de webmaster.

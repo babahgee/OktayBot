@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Execute = void 0;
 const discord_js_1 = require("discord.js");
-const canvas_1 = require("../essentials/canvas");
 /**
  * Executes the nowplaying function.
  * @param message Passed message object.
@@ -40,7 +39,7 @@ function Execute(message, commandArguments, client, player) {
             .setDescription(`van ${currentTrack.author}. ${trackTimestamp.current} - ${trackDuration}`)
             .setFooter(`Opdracht uitgevoerd door ${message.author.username}`);
         switch (true) {
-            case commandArguments.includes("uitgebreid"):
+            case commandArguments.includes("all"):
                 embedMessage.addFields([
                     {
                         name: "Volume",
@@ -61,8 +60,7 @@ function Execute(message, commandArguments, client, player) {
                 ]);
                 break;
             case commandArguments.includes("fancy"):
-                const imageSource = yield (0, canvas_1.createTrackPlayerImage)(currentTrack.title, currentTrack.author, trackTimestamp.current, trackDuration, currentTrack.thumbnail);
-                return message.channel.send({ attachments: [imageSource] });
+                return message.channel.send("Deze feature is momenteel niet beschikbaar.");
                 break;
         }
         message.channel.send({ embeds: [embedMessage] });

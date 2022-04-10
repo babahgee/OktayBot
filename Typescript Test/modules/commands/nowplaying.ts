@@ -42,7 +42,7 @@ export async function Execute(message: Message, commandArguments: Array<string>,
 
 
     switch (true) {
-        case commandArguments.includes("uitgebreid"):
+        case commandArguments.includes("all"):
 
             embedMessage.addFields([
                 {
@@ -61,19 +61,13 @@ export async function Execute(message: Message, commandArguments: Array<string>,
                     name: "Filters",
                     value: filters
                 },
-            ])
+            ]);
+
             break;
         case commandArguments.includes("fancy"):
 
-            const imageSource: MessageAttachment = await createTrackPlayerImage(
-                currentTrack.title,
-                currentTrack.author,
-                trackTimestamp.current,
-                trackDuration,
-                currentTrack.thumbnail
-            );
 
-            return message.channel.send({attachments: [imageSource] })
+            return message.channel.send("Deze feature is momenteel niet beschikbaar.");
 
             break;
     }

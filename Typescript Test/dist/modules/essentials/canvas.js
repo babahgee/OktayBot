@@ -29,21 +29,22 @@ console.log("Succesfully registered fonts.".green);
 function createTrackPlayerImage(trackName, trackAuthor, trackTimestamp, trackDuration, trackThumbnail) {
     return __awaiter(this, void 0, void 0, function* () {
         const destination = posix_1.default.join(__dirname, "../dist", "cache", (0, utils_1.UniqueID)(18));
-        const downloadedImage = yield (0, utils_1.downloadImage)(trackThumbnail, destination);
-        const converting = yield webp.cwebp(destination, posix_1.default.join(destination + ".png"));
-        yield fs_1.default.unlinkSync(destination);
-        console.log();
-        const image = yield (0, canvas_1.loadImage)(posix_1.default.join(__dirname, "../dist", "cache", "bbg.png"), {
-            format: "png"
-        });
-        fs_1.default.unlinkSync(posix_1.default.join(destination + ".png"));
+        const filePath = destination + ".png";
+        const downloadedImage = yield (0, utils_1.DownloadImageFromURL)(trackThumbnail, destination);
+        if (downloadedImage.status !== 200)
+            return (0, utils_1.CreateErrorMessageAttachment)(`Foutcode: ${downloadedImage.status}`);
+        const converting = yield webp.cwebp(destination, filePath);
+        yield fs_1.default.unlinkSync(trackThumbnail);
+        console.log(fs_1.default.existsSync(filePath));
+        const image = yield (0, canvas_1.loadImage)("https://zeilmakerijdeoversteek.nl/wp-content/uploads/2019/06/test-elonisas.jpg");
+        fs_1.default.unlinkSync(filePath);
         console.log(`Succesfully loaded image ${image.src}.`.green);
         ctx.save();
         ctx.beginPath();
         ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
         ctx.restore();
-        const file = fs_1.default.writeFileSync(destination + ".png", canvas.toDataURL('image/png'));
-        const attachment = new discord_js_1.MessageAttachment(destination + ".png", "bruh.png");
+        const file = fs_1.default.writeFileSync(filePath, canvas.toBuffer());
+        const attachment = new discord_js_1.MessageAttachment(filePath);
         console.log(`Attachement succesfully created.`.green);
         return attachment;
     });
