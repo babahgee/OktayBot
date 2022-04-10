@@ -6,8 +6,18 @@ import * as Path from "path";
 import * as URL from "url";
 
 import "colors";
+import "dotenv";
 
 import { TextEncodings, CommandExecution, Prefix } from "./modules/utils";
+
+if (typeof process.env.BOT_TOKEN !== "string") {
+
+    console.log("Failed to run program since bot token has not been defined in the process environment.".red);
+
+    process.exit();
+
+}
+
 
 
 const client: DiscordJS.Client = new DiscordJS.Client({

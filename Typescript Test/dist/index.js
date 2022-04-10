@@ -37,7 +37,12 @@ const DiscordPlayer = __importStar(require("discord-player"));
 const FS = __importStar(require("fs"));
 const Path = __importStar(require("path"));
 require("colors");
+require("dotenv");
 const utils_1 = require("./modules/utils");
+if (typeof process.env.BOT_TOKEN !== "string") {
+    console.log("Failed to run program since bot token has not been defined in the process environment.".red);
+    process.exit();
+}
 const client = new DiscordJS.Client({
     intents: [
         DiscordJS.Intents.FLAGS.GUILDS,
