@@ -4,8 +4,9 @@
   "description": "Typescript Test",
   "main": "app.js",
   "author": {
-    "name": ""
+    "name": "Babah Gee"
   },
+  "repository": "https://github.com/babahgee/OktayBot",
   "scripts": {
     "build": "tsc --build",
     "init": "npm run build && npm run start",
