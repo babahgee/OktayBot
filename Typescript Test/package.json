@@ -1,7 +1,7 @@
 {
-  "name": "typescript-test",
-  "version": "0.0.0",
-  "description": "Typescript Test",
+  "name": "oktay-bot",
+  "version": "1.0.1",
+  "description": "Oktay Discord Bot",
   "main": "app.js",
   "author": {
     "name": "Babah Gee"
@@ -11,7 +11,7 @@
     "build": "tsc --build",
     "init": "npm run build && npm run start",
     "start": "node -r dotenv/config ./dist/index.js",
-    "install": "npm install @discordjs/builders @discordjs/opus @discordjs/rest @discordjs/voice @types/node canvas colors discord-api-types discord-player discord-tts discord.js dotenv ffmpeg genius-lyrics google-images mongoose openweather-apis openweathermap-node typescript webp-converter"
+    "install": "npm install @discordjs/builders @discordjs/opus @discordjs/rest @discordjs/voice @types/node canvas colors discord-api-types discord-player discord-tts discord.js dotenv ffmpeg ffmpeg-static genius-lyrics google-images mongoose openweather-apis openweathermap-node strip-json-comments typescript webp-converter"
   },
   "dependencies": {
     "@discordjs/builders": "^0.12.0",
