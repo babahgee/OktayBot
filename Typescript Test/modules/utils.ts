@@ -1,7 +1,11 @@
 import fs from "fs";
+import path from "path";
+
 import { IncomingMessage } from "http";
 import { MessageAttachment, MessageEmbed } from "discord.js";
 import https from "https";
+
+import { stripJsonComments } from "./essentials/stripJson";
 
 
 // ================= Interfaces =================
@@ -27,6 +31,19 @@ export interface ImageDownloadState {
     readonly contents?: string;
 }
 
+export interface HelpDictionary {
+    command: string;
+    prefix?: string;
+    description: string;
+    keyword?: string;
+    arguments?: Array<string>;
+}
+
+export interface BotPermissions {
+    command_execution_whitelist: Array<string>;
+    https_whitelist: Array<string>;
+    tokens: Array<string>;
+}
 
 // ================= Constant variables =================
 
@@ -36,11 +53,18 @@ export const TextEncodings: ITextEncodings = {
     whiteSpace: "\u200b"
 }
 
-export const Prefix: string = "!bb"; 
+export const Prefix: string = ".oktay"; 
 
 
+// ================= Permissions =================
 
+const permissionsFile = fs.readFileSync(path.join(__dirname, "../../", "bot.permissions.json"), { encoding: "utf-8" });
 
+export const AllPermissions: BotPermissions = JSON.parse(stripJsonComments(permissionsFile)).permissions;
+
+export const HTTPSWhitelist: Array<string> = AllPermissions.https_whitelist;
+export const CommandExecutionWhitelist: Array<string> = AllPermissions.command_execution_whitelist;
+export const Tokens: Array<string> = AllPermissions.tokens;
 
 
 // ================= Public functions =================

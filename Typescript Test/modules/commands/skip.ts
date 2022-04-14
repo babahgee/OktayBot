@@ -5,7 +5,20 @@ import { Player, QueryType, Queue } from "discord-player";
 import { joinVoiceChannel } from "@discordjs/voice";
 
 import { Client, Message, MessageEmbed, VoiceState } from "discord.js";
-import { TextEncodings, Prefix } from "../utils";
+import { TextEncodings, Prefix, HelpDictionary } from "../utils";
+
+
+
+export function GetHelp(): HelpDictionary {
+
+    const dict: HelpDictionary ={
+        command: "skip",
+        description: "Met deze opdracht kan jij een nummer overslaan dat momenteel word afgespeeld."
+    }
+
+    return dict;
+}
+
 
 /**
  * Executes the skip function.

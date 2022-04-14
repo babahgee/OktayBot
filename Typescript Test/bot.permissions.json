@@ -1,0 +1,26 @@
+{
+  // Main bot permissions
+  "permissions": {
+
+    "command_execution_whitelist": [
+      "326821148782231553",
+      "370128159036932096"
+    ],
+
+    // Whitelist with website urls that allows the bot to read data from.
+    "https_whitelist": [
+      "https://google.com",
+      "https://youtube.com",
+      "https://genius.com"
+    ],
+
+    // General tokens that allows the bot to do certain things.
+    "tokens": [
+      "bot.permission.playLocalAudio", // Allows the bot to play audio from the device that the bot is running on.
+      "bot.permission.playStreamAudio", // Allows the bot to play audio from a certain stream source like Spotify, YouTube etc.
+      "bot.permission.readFiles", // Allows the bot to read data files stored in the source code directory of the bot itself. This does not allow the bot to read data outside the directory.
+      "bot.permission.readProcessData" // Allows the bot to read data from the main process.
+    ]
+
+  }
+}

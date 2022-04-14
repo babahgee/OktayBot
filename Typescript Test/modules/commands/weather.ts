@@ -1,11 +1,22 @@
 import { Player } from "discord-player";
 import { Client, Message, MessageEmbed } from "discord.js";
-import { DegreesToCompass, Prefix, TextEncodings } from "../utils";
+import { DegreesToCompass, HelpDictionary, Prefix, TextEncodings } from "../utils";
 
 const weather = require("openweather-apis"),
     googleImages = require("google-images");
 
 const googleClient = new googleImages(process.env.GOOGLE_SE_ID, process.env.GOOGLE_SE_TOKEN);
+
+export function GetHelp(): HelpDictionary {
+
+    const dictionary: HelpDictionary = {
+        command: "weather",
+        description: "Als jij wilt weten hoe warm het is waar jij woont, kan je dat hiermee doen.",
+        keyword: "plaatsnaam"
+    }
+
+    return dictionary;
+}
 
 export function Execute(message: Message, commandArguments: Array<string>, client: Client, player: Player) {
 
@@ -23,7 +34,6 @@ export function Execute(message: Message, commandArguments: Array<string>, clien
         if (place.charAt(i) == " ") place = place.replace(" ", ""); 
     }
 
-    console.log(place);
 
     weather.setLang("en");
     weather.setCity(place);

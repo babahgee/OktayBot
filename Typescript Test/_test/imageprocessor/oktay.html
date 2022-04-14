@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <canvas width="720" height="1280"></canvas>
+
+    <img src="https://i1.sndcdn.com/artworks-fV8CSqFpytuhzibu-KCvoIg-t500x500.jpg" alt="Alternate Text" style="display: none;"/>
+
+    <script type="text/javascript">
+
+        const canvas = document.querySelector("canvas");
+        const ctx = canvas.getContext("2d");
+        const img = document.querySelector("img");
+
+        ctx.beginPath();
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.closePath();
+
+        ctx.beginPath();
+
+        ctx.fillStyle = "red";
+        ctx.fillRect(100, 40, canvas.width - 200, canvas.height - 400);
+
+        ctx.closePath();
+
+    </script>
+</body>
+</html>

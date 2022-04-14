@@ -15,7 +15,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>c88e58dd-9aef-4590-a0d4-ed05682e7606</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>dist/index.js</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <SearchPath>
     </SearchPath>
@@ -34,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".env" />
+    <Content Include="bot.permissions.json" />
     <Content Include="dist\audio\doet.mp3" />
     <Content Include="dist\audio\mjauw.mp3" />
     <Content Include="dist\audio\ooohh.mp3" />
@@ -124,20 +126,31 @@
     <Content Include="dist\data\mannen.txt" />
     <Content Include="init.bat" />
     <Content Include="modules\commands\tts.ts" />
+    <Content Include="modules\essentials\stripJson.ts" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="tsconfig.json" />
+    <Content Include="_test\imageprocessor\oktay.html">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="modules\commands\botstat.ts" />
+    <TypeScriptCompile Include="modules\commands\clear.ts" />
+    <TypeScriptCompile Include="modules\commands\exit.ts" />
+    <TypeScriptCompile Include="modules\commands\filter.ts" />
     <TypeScriptCompile Include="modules\commands\help.ts" />
     <TypeScriptCompile Include="modules\commands\lyrics.ts" />
     <TypeScriptCompile Include="modules\commands\nowplaying.ts" />
+    <TypeScriptCompile Include="modules\commands\oktay.ts" />
     <TypeScriptCompile Include="modules\commands\play.ts" />
     <TypeScriptCompile Include="modules\commands\queue.ts" />
     <TypeScriptCompile Include="modules\commands\skip.ts" />
+    <TypeScriptCompile Include="modules\commands\stop.ts" />
+    <TypeScriptCompile Include="modules\commands\volume.ts" />
     <TypeScriptCompile Include="modules\commands\weather.ts" />
     <TypeScriptCompile Include="modules\essentials\canvas.ts" />
     <TypeScriptCompile Include="modules\utils.ts" />
@@ -148,12 +161,13 @@
     <Folder Include="dist\data\attachments\error\" />
     <Folder Include="dist\data\fonts\" />
     <Folder Include="dist\data\attachments\" />
-    <Folder Include="dist\modules\" />
     <Folder Include="dist\audio\" />
     <Folder Include="dist\cache\" />
     <Folder Include="modules\" />
     <Folder Include="modules\commands\" />
     <Folder Include="modules\essentials\" />
+    <Folder Include="_test\" />
+    <Folder Include="_test\imageprocessor\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
 </Project>

@@ -38,6 +38,36 @@ const player: DiscordPlayer.Player = new DiscordPlayer.Player(client, {
 const commands: Array<string> = FS.readdirSync(Path.join(__dirname, "modules", "commands"), { encoding: "utf-8" });
 
 
+function createInvalidCommandEmbedMessage(): DiscordJS.MessageEmbed {
+
+    const msg: DiscordJS.MessageEmbed = new DiscordJS.MessageEmbed();
+
+    msg.setColor("RANDOM");
+    msg.setTimestamp();
+
+    if (client.user !== null) msg.setAuthor(client.user.username, client.user.displayAvatarURL());
+
+    msg.setTitle("Onbekende opdracht");
+    msg.setDescription(`De ingevoerde opdracht bestaat niet in mijn codebase. Voer ${Prefix} help uit om te zien tot welke opdrachten ter beschikking zijn.`);
+
+    return msg;
+}
+function createNoGivenCommandEmbedMessage(): DiscordJS.MessageEmbed {
+
+    const msg: DiscordJS.MessageEmbed = new DiscordJS.MessageEmbed();
+
+    msg.setColor("RANDOM");
+    msg.setTimestamp();
+
+    if (client.user !== null) msg.setAuthor(client.user.username, client.user.displayAvatarURL());
+
+    msg.setTitle("Ulan");
+    msg.setDescription(`Er zijn geen opdrachten ingevoerd. Voer ${Prefix} help uit om te zien tot welke opdrachten ter beschikking zijn.`);
+
+    return msg;
+
+}
+
 
 
 
@@ -55,20 +85,26 @@ client.on("messageCreate", async function (message: DiscordJS.Message) {
 
     if (command === "no_command_given") {
 
-        message.channel.send("Please enter a command.");
+        message.channel.send({ embeds: [createNoGivenCommandEmbedMessage()]});
 
         return;
     }
     if (!commands.includes(command + ".js")) {
 
-        message.channel.send(`${TextEncodings.graveAccent}Kan opdracht '${command}' niet uitvoeren sinds opdracht niet bestaat in codebase.${TextEncodings.graveAccent}`);
+        message.channel.send({ embeds: [createInvalidCommandEmbedMessage()]});
 
         return;
     }
 
     const commandExecution: CommandExecution = await import(Path.join(__dirname, "modules", "commands", command + ".js"));
 
-    await commandExecution.Execute(message, commandArguments, client, player);
+    try {
+        await commandExecution.Execute(message, commandArguments, client, player);
+    } catch (err: any) {
+
+        message.channel.send(err.message);
+
+    }
 });
 
 client.on("ready", function (client: DiscordJS.Client) {
@@ -78,7 +114,8 @@ client.on("ready", function (client: DiscordJS.Client) {
     client.user?.setPresence({
         status: "online",
         activities: [{
-            name: `Prefix: ${Prefix}`
+            name: `Mijn prefix is ${Prefix}`,
+            type: "PLAYING",
         }]
     });
    

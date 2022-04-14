@@ -5,9 +5,20 @@ import { Player, QueryType, Queue, Track } from "discord-player";
 import { AudioPlayer, createAudioPlayer, createAudioResource, entersState, joinVoiceChannel, PlayerSubscription, StreamType, VoiceConnection, VoiceConnectionStatus } from "@discordjs/voice";
 
 import { Client, Message, MessageEmbed, VoiceState } from "discord.js";
-import { TextEncodings, Prefix } from "../utils";
+import { TextEncodings, Prefix, HelpDictionary } from "../utils";
 
 const { getVoiceStream } = require("discord-tts");
+
+export function GetHelp(): HelpDictionary {
+
+    const dict: HelpDictionary = {
+        command: "tts",
+        description: "TTS, oftewel text-to-speech is een opdracht waarmee je de bot tekst kan laten spreken in een voice kanaal waar jij in zit. Let wel op, de tekst moet tussen de 10 en 200 tekens lang zijn.",
+        keyword: "tekst_content"
+    }
+
+    return dict;
+}
 
 
 /**

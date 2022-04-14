@@ -4,8 +4,19 @@ import path from "path";
 import { Player, QueryType, Queue, Track } from "discord-player";
 import { Client, Message, MessageAttachment, MessageEmbed, VoiceState } from "discord.js";
 
-import { TextEncodings, Prefix, PlayerTimestamp } from "../utils";
+import { TextEncodings, Prefix, PlayerTimestamp, HelpDictionary } from "../utils";
 import { createTrackPlayerImage } from "../essentials/canvas";
+
+export function GetHelp(): HelpDictionary {
+
+    const dict: HelpDictionary = {
+        command: "nowplaying",
+        description: "Als er nummer word afgespeeld, en jij wilt graag weten welk nummer er word afgespeeld, kun jij dat doen met deze opdracht.",
+        arguments: ["all", "fancy"]
+    };
+
+    return dict;
+}
 
 /**
  * Executes the nowplaying function.

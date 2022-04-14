@@ -1,7 +1,7 @@
 import "colors";
 
 import path from "node:path/posix";
-import fs from "fs";
+import fs, { createWriteStream, WriteStream } from "fs";
 
 import { Canvas, createCanvas, Image, loadImage, CanvasRenderingContext2D, registerFont } from "canvas";
 import { Message, MessageAttachment } from "discord.js";
@@ -59,4 +59,72 @@ export async function createTrackPlayerImage(trackName: string, trackAuthor: str
     console.log(`Attachement succesfully created.`.green);
 
     return attachment;
+}
+
+export async function createOktay(url: string): Promise<string> {
+
+    const destinationOutPath: string = path.join(__dirname, "../dist", "cache", UniqueID(18) + ".png");
+
+    const image: Image = await loadImage(url);
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    canvas.width = 720;
+    canvas.height = 1280;
+
+    // Save current state.
+    ctx.save();
+
+    // Draw background
+    ctx.beginPath();
+    ctx.fillStyle = "#030303";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.closePath();
+
+    // Draw image
+    ctx.beginPath();
+    ctx.filter = "blur(20px)";
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    ctx.closePath();
+
+
+    // Draw text
+    for (let i = 0; i < 220; i++) {
+
+        const x: number = Math.floor(Math.random() * canvas.width);
+        const y: number = Math.floor(Math.random() * canvas.height);
+        const rotation: number = Math.floor(Math.random() * 180);
+        const size: number = Math.floor(Math.random() * 60);
+
+        //ctx.translate(x, y);
+        //ctx.rotate(rotation * Math.PI / 180);
+
+        ctx.fillStyle = "#fff";
+        ctx.textAlign = "left";
+        ctx.shadowColor = "#000";
+        ctx.shadowOffsetX = 10;
+        ctx.shadowOffsetY = 10;
+        ctx.shadowBlur = 0;
+        ctx.font = `${size}px Montserrat`;
+        ctx.fillText("OKTAY", x, y);
+
+    }
+
+    // Restore states.
+    ctx.restore();
+
+    return new Promise(function (resolve, reject) {
+
+        const out: WriteStream = fs.createWriteStream(destinationOutPath);
+        const stream = canvas.createPNGStream();
+
+        stream.pipe(out);
+
+        out.on("finish", function () {
+
+            resolve(destinationOutPath);
+
+        });
+
+    });
 }

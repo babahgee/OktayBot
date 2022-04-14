@@ -3,11 +3,21 @@ import "colors";
 import { Player } from "discord-player";
 import { Client as DiscordClient, Message, MessageEmbed } from "discord.js";
 import { Client as GeniusClient, Song } from "genius-lyrics";
+import { HelpDictionary } from "../utils";
 
 
 const geniusClient: GeniusClient = new GeniusClient();
 
+export function GetHelp(): HelpDictionary {
 
+    const dict: HelpDictionary = {
+        command: "lyrics",
+        description: "Er zijn wel eens momenten waar je denkt van 'gaaaaa dayum, dit nummer is bussin' yo wat is hier de lyrics van?'. Met deze opdracht kan je dus songteksten ophalen vanuit Genius.",
+        keyword: "naam_van_nummer"
+    }
+
+    return dict;
+}
 
 
 /**
@@ -22,9 +32,6 @@ export async function Execute(message: Message, commandArguments: Array<string>,
     const searchName: string = commandArguments[0];
 
     if (searchName === "") return message.channel.send("Kan geen lyrics opzoeken. Er is geen naam opgegeven.");
-
-
-    console.log(`Fetching data...`.yellow);
 
     const searchResults = await geniusClient.songs.search(searchName);
 

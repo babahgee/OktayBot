@@ -5,7 +5,18 @@ import { Player, QueryType, Queue } from "discord-player";
 import { AudioPlayer, AudioPlayerState, createAudioPlayer, createAudioResource, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
 
 import { Client, Message, MessageEmbed, VoiceChannel, VoiceState } from "discord.js";
-import { TextEncodings, Prefix } from "../utils";
+import { TextEncodings, Prefix, HelpDictionary } from "../utils";
+
+export function GetHelp(): HelpDictionary {
+
+    const dict: HelpDictionary = {
+        command: "play", 
+        description: "Met deze opdracht kan jij een of meerdere nummers afspelen in een voice kanaal waar jij in zit.",
+        keyword: "naam_van_nummer"
+    };
+
+    return dict;
+}
 
 /**
  * Executes the play function.

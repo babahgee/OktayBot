@@ -5,7 +5,7 @@ import { Player, QueryType, Queue, Track } from "discord-player";
 import { joinVoiceChannel } from "@discordjs/voice";
 
 import { Client, Message, MessageEmbed, VoiceState } from "discord.js";
-import { TextEncodings, Prefix } from "../utils";
+import { TextEncodings, Prefix, HelpDictionary } from "../utils";
 
 
 interface TrackEmbedDetail {
@@ -14,6 +14,18 @@ interface TrackEmbedDetail {
     requestedBy: string;
     queueIndexNumber: number;
 }
+
+
+export function GetHelp(): HelpDictionary {
+
+    const dict: HelpDictionary = {
+        command: "queue",
+        description: "Met deze opdracht kun jij zien hoeveel en welke nummers er nog in de wachtrij staan."
+    };
+
+    return dict;
+}
+
 
 /**
  * Executes the queue function.
