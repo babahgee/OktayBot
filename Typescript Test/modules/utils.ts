@@ -59,8 +59,9 @@ export const Prefix: string = ".oktay";
 // ================= Permissions =================
 
 const permissionsFile = fs.readFileSync(path.join(__dirname, "../../", "bot.permissions.json"), { encoding: "utf-8" });
+const formattedFile: any = JSON.parse(stripJsonComments(permissionsFile));
 
-export const AllPermissions: BotPermissions = JSON.parse(stripJsonComments(permissionsFile)).permissions;
+export const AllPermissions: BotPermissions = formattedFile.permissions;
 
 export const HTTPSWhitelist: Array<string> = AllPermissions.https_whitelist;
 export const CommandExecutionWhitelist: Array<string> = AllPermissions.command_execution_whitelist;
@@ -181,4 +182,46 @@ export async function DownloadImageFromURL(url: string, filePath: string): Promi
 
     });
 
+}
+
+export function BytesToSize(bytes: number): string | number {
+
+    const sizes: Array<string> = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+
+    if (bytes == 0) return '0 Byte';
+
+    //@ts-expect-error
+    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+
+    //@ts-expect-error
+    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+}
+
+export function CodeFormatTokens(): Array<string> {
+
+    const arr: Array<string> = [];
+
+    Tokens.forEach(function (token: string) {
+        arr.push("```" + token + "```");
+    });
+
+    return arr;
+}
+
+export function SaveChangedBotPermissions(): BotPermissions | boolean {
+
+    if (!fs.existsSync(path.join(__dirname, "../../", "bot.permissions.json"))) {
+
+        console.log(`Failed to change bot server permission file since file does not exist or may not be readable.`.red);
+
+        return false;
+    }
+
+    const temp = {
+        permissions: AllPermissions
+    }
+
+    fs.writeFileSync(path.join(__dirname, "../../", "bot.permissions.json"), JSON.stringify(temp, null, 3), { encoding: "utf-8" });
+
+    return AllPermissions as BotPermissions;
 }

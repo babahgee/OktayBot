@@ -72,6 +72,10 @@ export async function Execute(message: Message, commandArguments: Array<string>,
                     name: "Filters",
                     value: filters
                 },
+                {
+                    name: "Opgevraagd door",
+                    value: currentTrack.requestedBy.username
+                }
             ]);
 
             break;

@@ -120,45 +120,4 @@ export async function Execute(message: Message, commandArguments: Array<string>,
         // Send the embed message.
         message.channel.send({ embeds: [embedMessage] });
     }
-
-    player.once("queueEnd", function (queue: Queue) {
-
-        message.channel.send("Doet");
-
-
-        //const newConnection: VoiceConnection = joinVoiceChannel({
-        //    channelId: channel.id, // Join the client in the channel id.
-        //    guildId: channel.guild.id, // Pass the channel guild id.
-        //    adapterCreator: channel.guild.voiceAdapterCreator, // Use voice adapter.
-        //    selfDeaf: true // Self deafen
-        //});
-
-        //const soundEffects: Array<string> = fs.readdirSync(path.join(__dirname, "../../", "audio"), {encoding: "utf-8"});
-
-        //const stream: ReadStream = createReadStream(path.join(__dirname, "../../", "audio", soundEffects[Math.floor(Math.random() * soundEffects.length)]));
-
-        //const resource = createAudioResource(stream, {
-        //    inlineVolume: true,
-        //});
-
-        //const newPlayer: AudioPlayer = createAudioPlayer();
-
-        //newConnection.subscribe(newPlayer);
-
-        //newPlayer.play(resource);
-
-        //newPlayer.on("stateChange", function (state) {
-
-        //    if (state.status === "idle") {
-
-        //        newConnection.disconnect();
-        //        newConnection.destroy();
-
-        //        newPlayer.removeAllListeners();
-        //    }
-
-        //});
-
-    });
-
 }

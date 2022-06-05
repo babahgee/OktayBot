@@ -37,6 +37,11 @@
     "webp-converter": "^2.3.3"
   },
   "devDependencies": {
-    "@types/strip-json-comments": "^3.0.0"
+    "@types/os-utils": "^0.0.1",
+    "@types/strip-json-comments": "^3.0.0",
+    "@types/systeminformation": "^3.54.1",
+    "git-repo-info": "^2.1.1",
+    "os-utils": "^0.0.14",
+    "systeminformation": "^5.11.16"
   }
 }

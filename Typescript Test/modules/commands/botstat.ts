@@ -1,7 +1,10 @@
 import { Player } from "discord-player";
 import { Client, Message, MessageEmbed } from "discord.js";
+import { cpu, cpuCurrentSpeed } from "systeminformation";
+import { cpuUsage } from "os-utils";
+import gitRepoInfo, { GitRepoInfo } from "git-repo-info";
 
-import { CommandExecutionWhitelist, HelpDictionary } from "../utils";
+import { AllPermissions, BytesToSize, CodeFormatTokens, CommandExecutionWhitelist, HelpDictionary, TextEncodings, Tokens } from "../utils";
 
 export function GetHelp(): HelpDictionary {
 
@@ -11,6 +14,15 @@ export function GetHelp(): HelpDictionary {
     }
 
     return dict;
+}
+
+export async function GetCPUUsage(): Promise<number> {
+
+    return new Promise(function (resolve, reject) {
+        cpuUsage(function (usage: number) {
+            resolve(usage as number);
+        });
+    });
 }
 
 
@@ -25,17 +37,33 @@ export async function Execute(message: Message, commandArguments: Array<string>,
 
     const embed: MessageEmbed = new MessageEmbed();
 
+    const cpuUsage: string = (await GetCPUUsage() as number * 100).toFixed(2);
+    const moods: Array<string> = ["Normaal", "Opgewonden", "Verdrietig", "Quirky", "Oktay-achtig", "??"];
+    const repoInfo: GitRepoInfo = gitRepoInfo("https://github.com/babahgee/OktayBot");
+
     embed.setAuthor({ name: userName, iconURL: userAvatar });
     embed.setTitle("Bot statistieken");
+    embed.setDescription("Uitvoerbaar door elk lid dat toegang heeft tot de bot. Opdracht laat zien hoe de bot zich momenteel gedraagt");
     embed.setColor("RED");
     embed.setThumbnail(userAvatar);
+    embed.setFooter({
+        text: userName,
+        iconURL: userAvatar
+    });
 
     //@ts-expect-error
     embed.addField("Uptime", client.uptime === null ? client.uptime.toString() : "Kan client uptime niet vinden");
     embed.addField("Proces uptime", process.uptime().toString());
-    embed.addField("Geheugengebruik", process.memoryUsage().heapUsed.toString());
-    embed.addField("Gebruikers CPU verbruik", process.cpuUsage().user.toString());
+    embed.addField("Geheugengebruik", BytesToSize(process.memoryUsage().heapUsed as number).toString());
+    embed.addField("CPU verbruik", cpuUsage.toString() + "%");
     embed.addField("Systeem CPU verbruik", process.cpuUsage().system.toString());
+    embed.addField("Stemming", moods[Math.floor(Math.random() * moods.length)]);
+    embed.addField("Bot (interne) rechten", CodeFormatTokens().join(""));
+    embed.addField(TextEncodings.whiteSpace, TextEncodings.whiteSpace);
+    embed.addField("Bot repository link", "https://github.com/babahgee/OktayBot");
+    embed.addField("Repository committer", repoInfo.committer);
+    embed.addField("Repository committer date", repoInfo.committerDate);
+
 
     message.channel.send({ embeds: [embed] });
 }

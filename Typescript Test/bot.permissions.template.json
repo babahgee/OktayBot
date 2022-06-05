@@ -3,8 +3,8 @@
   "permissions": {
 
     "command_execution_whitelist": [
-      "326821148782231553",
-      "370128159036932096"
+      "326821148782231553", // He#6235
+      "370128159036932096" // B?B?? G??#7100
     ],
 
     // Whitelist with website urls that allows the bot to read data from.

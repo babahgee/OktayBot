@@ -37,6 +37,7 @@
   <ItemGroup>
     <Content Include=".env" />
     <Content Include="bot.permissions.json" />
+    <Content Include="bot.permissions.template.json" />
     <Content Include="dist\audio\doet.mp3" />
     <Content Include="dist\audio\mjauw.mp3" />
     <Content Include="dist\audio\ooohh.mp3" />
@@ -141,12 +142,14 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="modules\commands\botstat.ts" />
     <TypeScriptCompile Include="modules\commands\clear.ts" />
+    <TypeScriptCompile Include="modules\commands\eval.ts" />
     <TypeScriptCompile Include="modules\commands\exit.ts" />
     <TypeScriptCompile Include="modules\commands\filter.ts" />
     <TypeScriptCompile Include="modules\commands\help.ts" />
     <TypeScriptCompile Include="modules\commands\lyrics.ts" />
     <TypeScriptCompile Include="modules\commands\nowplaying.ts" />
     <TypeScriptCompile Include="modules\commands\oktay.ts" />
+    <TypeScriptCompile Include="modules\commands\permissions.ts" />
     <TypeScriptCompile Include="modules\commands\play.ts" />
     <TypeScriptCompile Include="modules\commands\queue.ts" />
     <TypeScriptCompile Include="modules\commands\skip.ts" />

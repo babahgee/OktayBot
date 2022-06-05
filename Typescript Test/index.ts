@@ -18,7 +18,7 @@ if (typeof process.env.BOT_TOKEN !== "string") {
 
 }
 
-
+console.log("Initializing Discord client, YTDL DiscordPlayer client and main program...".yellow);
 
 const client: DiscordJS.Client = new DiscordJS.Client({
     intents: [
@@ -28,10 +28,11 @@ const client: DiscordJS.Client = new DiscordJS.Client({
         DiscordJS.Intents.FLAGS.GUILD_VOICE_STATES,
     ]
 });
+
 const player: DiscordPlayer.Player = new DiscordPlayer.Player(client, {
     ytdlOptions: {
         quality: "highestaudio",
-        highWaterMark: 1 << 25
+        highWaterMark: 1 << 25,
     }
 });
 
@@ -76,7 +77,6 @@ client.on("messageCreate", async function (message: DiscordJS.Message) {
     if (message.author.id === client.user?.id || message.author.bot) return;
     if (!message.content.startsWith(Prefix)) return;
 
-
     const msg: string = message.content,
         format: Array<string> = msg.split(" ");
 
@@ -85,11 +85,15 @@ client.on("messageCreate", async function (message: DiscordJS.Message) {
 
     if (command === "no_command_given") {
 
+        console.log(`User '${message.author.username}' tried executing a non-given command at ${new Date()}`.yellow);
+        
         message.channel.send({ embeds: [createNoGivenCommandEmbedMessage()]});
 
         return;
     }
     if (!commands.includes(command + ".js")) {
+
+        console.log(`User '${message.author.username}' tried executing a non-existing command '${command}' at ${new Date()}`.yellow);
 
         message.channel.send({ embeds: [createInvalidCommandEmbedMessage()]});
 
@@ -102,14 +106,18 @@ client.on("messageCreate", async function (message: DiscordJS.Message) {
         await commandExecution.Execute(message, commandArguments, client, player);
     } catch (err: any) {
 
-        message.channel.send(err.message);
+        const error: Error = err as Error;
+
+        console.log(`Failed to execute command '${command}'. Error message: ${error.message}. Error stack: ${error.stack}`.bgBlack.red);
+
+        message.channel.send(error.message);
 
     }
 });
 
 client.on("ready", function (client: DiscordJS.Client) {
 
-    console.log("Client succesfully has been initialized.".green);
+    console.log(`Client succesfully has been initialized at ${new Date()}. Now ready to execute commands. To close this window, hit CTRL + C twice and the process should kill itself.`.green);
 
     client.user?.setPresence({
         status: "online",
@@ -124,6 +132,6 @@ client.on("ready", function (client: DiscordJS.Client) {
 
 client.login(process.env.BOT_TOKEN).then(function (value: string) {
 
-    console.log(`Client succesfully logged in.`.green);
-
+    console.log(`Client succesfully logged in at ${new Date()}.`.rainbow.bgBlack);
+    
 });
