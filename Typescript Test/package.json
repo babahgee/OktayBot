@@ -11,7 +11,7 @@
     "build": "tsc --build",
     "init": "npm run build && npm run start",
     "start": "node -r dotenv/config ./dist/index.js",
-    "install": "npm install @discordjs/builders @discordjs/opus @discordjs/rest @discordjs/voice @types/node canvas colors discord-api-types discord-player discord-tts discord.js dotenv ffmpeg ffmpeg-static genius-lyrics google-images mongoose openweather-apis openweathermap-node strip-json-comments typescript webp-converter"
+    "install": "npm install @discordjs/builders @discordjs/opus @discordjs/rest @discordjs/voice @types/node canvas colors discord-api-types discord-player discord-tts discord.js dotenv ffmpeg ffmpeg-static genius-lyrics google-images mongoose openweather-apis openweathermap-node strip-json-comments typescript webp-converter git-repo-info"
   },
   "dependencies": {
     "@discordjs/builders": "^0.12.0",
