@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 
 import { Player, QueryType, Queue, Track } from "discord-player";
-import { AudioPlayer, createAudioPlayer, createAudioResource, entersState, joinVoiceChannel, PlayerSubscription, StreamType, VoiceConnection, VoiceConnectionStatus } from "@discordjs/voice";
+import { AudioPlayer, createAudioPlayer, createAudioResource, entersState, joinVoiceChannel, PlayerSubscription, StreamType, VoiceConnection, VoiceConnectionStatus, DiscordGatewayAdapterCreator } from "@discordjs/voice";
 
 import { Client, Message, MessageEmbed, VoiceState } from "discord.js";
 import { TextEncodings, Prefix, HelpDictionary } from "../utils";
@@ -53,7 +53,7 @@ export async function Execute(message: Message, commandArguments: Array<string>,
     const voiceConnection: VoiceConnection = joinVoiceChannel({
         channelId: channel.id,
         guildId: channel.guildId,
-        adapterCreator: channel.guild.voiceAdapterCreator,
+        adapterCreator: channel.guild.voiceAdapterCreator as DiscordGatewayAdapterCreator,
         selfDeaf: true
     });
 
