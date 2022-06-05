@@ -2,7 +2,7 @@ import fs, { createReadStream, ReadStream, stat } from "fs";
 import path from "path";
 
 import { Player, QueryType, Queue } from "discord-player";
-import { AudioPlayer, AudioPlayerState, createAudioPlayer, createAudioResource, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
+import { AudioPlayer, AudioPlayerState, createAudioPlayer, createAudioResource, DiscordGatewayAdapterCreator, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
 
 import { Client, Message, MessageEmbed, VoiceChannel, VoiceState } from "discord.js";
 import { TextEncodings, Prefix, HelpDictionary } from "../utils";
@@ -92,7 +92,7 @@ export async function Execute(message: Message, commandArguments: Array<string>,
     const connection: VoiceConnection = joinVoiceChannel({
         channelId: channel.id, // Join the client in the channel id.
         guildId: channel.guild.id, // Pass the channel guild id.
-        adapterCreator: channel.guild.voiceAdapterCreator, // Use voice adapter.
+        adapterCreator: channel.guild.voiceAdapterCreator as DiscordGatewayAdapterCreator, // Use voice adapter.
         selfDeaf: true // Self deafen
     });
 
