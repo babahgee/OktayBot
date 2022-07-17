@@ -33,15 +33,63 @@ const player: DiscordPlayer.Player = new DiscordPlayer.Player(client, {
     ytdlOptions: {
         quality: "highestaudio",
         highWaterMark: 1 << 25,
-    }
+    },
+    connectionTimeout: 10000
 });
+
+let lastMessageGuild: DiscordJS.Message;
+
+player.on("trackStart", function (queue: DiscordPlayer.Queue, track: DiscordPlayer.Track) {
+
+    const embed: DiscordJS.MessageEmbed = new DiscordJS.MessageEmbed({
+        title: `Speelt '${track.title}' af`,
+        description: `_${track.title}_ van _${track.author}_ word nu afgespeeld.`,
+        thumbnail: {
+            url: track.thumbnail
+        },
+        footer: {
+            text: `Opgevraagd door '${track.requestedBy.username}'`
+        }
+    });
+
+    client.user?.setPresence({
+        status: "online",
+        activities: [{
+            name: track.title,
+            url: track.url,
+            type: "LISTENING",
+        }]
+    });
+
+    if (typeof lastMessageGuild !== "undefined") lastMessageGuild.channel.send({ embeds: [embed] });
+});
+
+player.on("queueEnd", function (queue: DiscordPlayer.Queue) {
+
+    client.user?.setPresence({
+        status: "online",
+        activities: [{
+            name: `Mijn prefix is ${Prefix}`,
+            type: "PLAYING",
+        }]
+    });
+
+});
+
+
+
 
 const commands: Array<string> = FS.readdirSync(Path.join(__dirname, "modules", "commands"), { encoding: "utf-8" });
 
 
-function createInvalidCommandEmbedMessage(): DiscordJS.MessageEmbed {
+function createInvalidCommandEmbedMessage(command: string): DiscordJS.MessageEmbed {
 
     const msg: DiscordJS.MessageEmbed = new DiscordJS.MessageEmbed();
+    const possibleCommands: Array<string> = [];
+
+    commands.forEach(function (cmd: string) {
+        if (cmd.indexOf(command) > -1) possibleCommands.push("``" + `${Prefix} ${cmd.split(".js")[0]}` + "``");
+    });
 
     msg.setColor("RANDOM");
     msg.setTimestamp();
@@ -49,7 +97,7 @@ function createInvalidCommandEmbedMessage(): DiscordJS.MessageEmbed {
     if (client.user !== null) msg.setAuthor(client.user.username, client.user.displayAvatarURL());
 
     msg.setTitle("Onbekende opdracht");
-    msg.setDescription(`De ingevoerde opdracht bestaat niet in mijn codebase. Voer ${Prefix} help uit om te zien tot welke opdrachten ter beschikking zijn.`);
+    msg.setDescription(`De ingevoerde opdracht bestaat niet in mijn codebase. Voer ${Prefix} help uit om te zien tot welke opdrachten ter beschikking zijn.\n\n Bedoel je misschien ${possibleCommands.join(", ")}`);
 
     return msg;
 }
@@ -95,7 +143,7 @@ client.on("messageCreate", async function (message: DiscordJS.Message) {
 
         console.log(`User '${message.author.username}' tried executing a non-existing command '${command}' at ${new Date()}`.yellow);
 
-        message.channel.send({ embeds: [createInvalidCommandEmbedMessage()]});
+        message.channel.send({ embeds: [createInvalidCommandEmbedMessage(command)]});
 
         return;
     }
@@ -104,6 +152,9 @@ client.on("messageCreate", async function (message: DiscordJS.Message) {
 
     try {
         await commandExecution.Execute(message, commandArguments, client, player);
+
+        lastMessageGuild = message;
+
     } catch (err: any) {
 
         const error: Error = err as Error;

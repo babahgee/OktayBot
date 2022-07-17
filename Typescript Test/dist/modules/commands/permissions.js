@@ -28,8 +28,7 @@ function Execute(message, commandArguments, client, player) {
         if (!utils_1.CommandExecutionWhitelist.includes(message.author.id))
             return message.channel.send("bruh jij bent niet bevoegd om deze opdracht uit te voeren.");
         const argFormat = commandArguments[0].replace(" ", "").split(" ");
-        if (typeof argFormat[1] === "undefined" || argFormat[1] === "")
-            return message.channel.send("Kan machtigings token niet toevoegen omdat er geen token is opgenoemd.");
+        //  if (typeof argFormat[1] === "undefined" || argFormat[1] === "") return message.channel.send("Kan machtigings token niet toevoegen omdat er geen token is opgenoemd.");
         const keyword = argFormat[0];
         const token = argFormat[1];
         const embed = new discord_js_1.MessageEmbed({
@@ -49,14 +48,19 @@ function Execute(message, commandArguments, client, player) {
             case "add":
                 if (!utils_1.AllPermissions.tokens.includes(token))
                     utils_1.AllPermissions.tokens.push(token);
+                embed.title = "Permissie token toegevoegd.";
+                embed.description = `Permissie token ${token} is zojuist toegevoegd aan het register.`;
                 break;
             case "remove":
                 utils_1.AllPermissions.tokens.forEach(function (_token, index) {
                     if (token === _token)
                         utils_1.AllPermissions.tokens.splice(index, 1);
                 });
+                embed.title = "Permissie token verwijderdd.";
+                embed.description = `Permissie token ${token} is zojuist verwijderd van het register.`;
                 break;
         }
+        console.log(keyword);
         embed.addField("Bot machtigingen", (0, utils_1.CodeFormatTokens)().join(""));
         (0, utils_1.SaveChangedBotPermissions)();
         return message.channel.send({

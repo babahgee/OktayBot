@@ -1,10 +1,10 @@
 import fs, { createReadStream, ReadStream, stat } from "fs";
 import path from "path";
 
-import { Player, QueryType, Queue } from "discord-player";
+import { Player, QueryType, Queue, Track } from "discord-player";
 import { AudioPlayer, AudioPlayerState, createAudioPlayer, createAudioResource, DiscordGatewayAdapterCreator, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
 
-import { Client, Message, MessageEmbed, VoiceChannel, VoiceState } from "discord.js";
+import { Client, Message, MessageEmbed, MessageManager, VoiceChannel, VoiceState } from "discord.js";
 import { TextEncodings, Prefix, HelpDictionary } from "../utils";
 
 export function GetHelp(): HelpDictionary {
@@ -16,6 +16,36 @@ export function GetHelp(): HelpDictionary {
     };
 
     return dict;
+}
+
+function createAddedToQueueEmbedMessage(track: Track): MessageEmbed {
+
+    const embed: MessageEmbed = new MessageEmbed({
+        title: `${track.title} toegevoegd`,
+        description: `Het nummer _'${track.title}'_ van _'${track.author}'_ is toegevoegd aan de wachtrij. Voer \`\`${Prefix} queue\`\` uit om de wachtrij te bekijken.`,
+        author: {
+            name: track.requestedBy.username,
+            iconURL: track.requestedBy.displayAvatarURL()
+        },
+        thumbnail: {
+            url: track.thumbnail
+        },
+        color: "RANDOM",
+        fields: [
+            {
+                name: "Afspeeltijd",
+                value: track.duration,
+                inline: true
+            },
+            {
+                name: "Wachtrij positie",
+                value: track.queue.tracks.length === 0 ? "Wordt momenteel afgespeeld" : (track.queue.tracks.length).toString(),
+                inline: true
+            }
+        ]
+    });
+
+    return embed;
 }
 
 /**
@@ -49,7 +79,11 @@ export async function Execute(message: Message, commandArguments: Array<string>,
 
     // Create a queue
     const queue = await player.createQueue(message.guild, {
-        metadata: message.channel
+        metadata: message.channel,
+        leaveOnEmpty: false,
+        autoSelfDeaf: true,
+        leaveOnEnd: false,
+        leaveOnStop: true,
     });
 
     // Try to join the voice channel.
@@ -99,25 +133,8 @@ export async function Execute(message: Message, commandArguments: Array<string>,
     // If the search results is a playlist, add the entire playlist to the queue or else add the first track only.
     res.playlist ? queue.addTracks(res.tracks) : queue.addTrack(res.tracks[0]);
 
+    if (!res.playlist) message.channel.send({ embeds: [createAddedToQueueEmbedMessage(res.tracks[0] as Track)] });
+
     // If the queue is not playing, try to play the queue.
-    if (!queue.playing) {
-
-        // Play the queue.
-        await queue.play();
-
-        // Create an embed message to visualise the current playing song.
-        const embedMessage: MessageEmbed = new MessageEmbed();
-
-        embedMessage.setColor("#000000");
-        embedMessage.setTitle(res.tracks[0].title);
-        embedMessage.setDescription(res.tracks[0].author);
-        embedMessage.setThumbnail(res.tracks[0].thumbnail);
-        embedMessage.setURL(res.tracks[0].url);
-        embedMessage.setFooter({
-            text: `Opgevraagd door ${res.tracks[0].requestedBy.username}`
-        });
-
-        // Send the embed message.
-        message.channel.send({ embeds: [embedMessage] });
-    }
+    if (!queue.playing) await queue.play();
 }

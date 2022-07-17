@@ -13,6 +13,7 @@ exports.Execute = exports.GetHelp = void 0;
 const discord_player_1 = require("discord-player");
 const voice_1 = require("@discordjs/voice");
 const discord_js_1 = require("discord.js");
+const utils_1 = require("../utils");
 function GetHelp() {
     const dict = {
         command: "play",
@@ -22,6 +23,33 @@ function GetHelp() {
     return dict;
 }
 exports.GetHelp = GetHelp;
+function createAddedToQueueEmbedMessage(track) {
+    const embed = new discord_js_1.MessageEmbed({
+        title: `${track.title} toegevoegd`,
+        description: `Het nummer _'${track.title}'_ van _'${track.author}'_ is toegevoegd aan de wachtrij. Voer \`\`${utils_1.Prefix} queue\`\` uit om de wachtrij te bekijken.`,
+        author: {
+            name: track.requestedBy.username,
+            iconURL: track.requestedBy.displayAvatarURL()
+        },
+        thumbnail: {
+            url: track.thumbnail
+        },
+        color: "RANDOM",
+        fields: [
+            {
+                name: "Afspeeltijd",
+                value: track.duration,
+                inline: true
+            },
+            {
+                name: "Wachtrij positie",
+                value: track.queue.tracks.length === 0 ? "Wordt momenteel afgespeeld" : (track.queue.tracks.length).toString(),
+                inline: true
+            }
+        ]
+    });
+    return embed;
+}
 /**
  * Executes the play function.
  * @param message Passed message object.
@@ -50,7 +78,11 @@ function Execute(message, commandArguments, client, player) {
             return message.channel.send("Kan spraakkanaal niet joinen omdat er een error is opgetreden. ``MESSAGE.GUILD has been defined as null``");
         // Create a queue
         const queue = yield player.createQueue(message.guild, {
-            metadata: message.channel
+            metadata: message.channel,
+            leaveOnEmpty: false,
+            autoSelfDeaf: true,
+            leaveOnEnd: false,
+            leaveOnStop: true,
         });
         // Try to join the voice channel.
         try {
@@ -86,23 +118,11 @@ function Execute(message, commandArguments, client, player) {
         });
         // If the search results is a playlist, add the entire playlist to the queue or else add the first track only.
         res.playlist ? queue.addTracks(res.tracks) : queue.addTrack(res.tracks[0]);
+        if (!res.playlist)
+            message.channel.send({ embeds: [createAddedToQueueEmbedMessage(res.tracks[0])] });
         // If the queue is not playing, try to play the queue.
-        if (!queue.playing) {
-            // Play the queue.
+        if (!queue.playing)
             yield queue.play();
-            // Create an embed message to visualise the current playing song.
-            const embedMessage = new discord_js_1.MessageEmbed();
-            embedMessage.setColor("#000000");
-            embedMessage.setTitle(res.tracks[0].title);
-            embedMessage.setDescription(res.tracks[0].author);
-            embedMessage.setThumbnail(res.tracks[0].thumbnail);
-            embedMessage.setURL(res.tracks[0].url);
-            embedMessage.setFooter({
-                text: `Opgevraagd door ${res.tracks[0].requestedBy.username}`
-            });
-            // Send the embed message.
-            message.channel.send({ embeds: [embedMessage] });
-        }
     });
 }
 exports.Execute = Execute;

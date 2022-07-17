@@ -38,9 +38,6 @@
     <Content Include=".env" />
     <Content Include="bot.permissions.json" />
     <Content Include="bot.permissions.template.json" />
-    <Content Include="dist\audio\doet.mp3" />
-    <Content Include="dist\audio\mjauw.mp3" />
-    <Content Include="dist\audio\ooohh.mp3" />
     <Content Include="dist\data\attachments\error\attachment.notfound.txt" />
     <Content Include="dist\data\commanddetails.json" />
     <Content Include="dist\data\fonts\atures.ttf" />
@@ -125,11 +122,13 @@
     <Content Include="dist\data\fonts\scary_halloween.zip" />
     <Content Include="dist\data\fonts\VeganAbattoir.otf" />
     <Content Include="dist\data\fonts\WhitneyMedium.woff" />
+    <Content Include="dist\data\languages\dutch.json" />
     <Content Include="dist\data\mannen.txt" />
     <Content Include="init.bat" />
     <Content Include="modules\commands\tts.ts" />
     <Content Include="modules\essentials\stripJson.ts" />
     <Content Include="package.json" />
+    <Content Include="programInitialization.exe" />
     <Content Include="README.md" />
     <Content Include="tsconfig.json" />
     <Content Include="_test\imageprocessor\oktay.html">
@@ -137,6 +136,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="dev\getUserInfo.ts" />
+    <TypeScriptCompile Include="dev\programInitialization.ts" />
     <TypeScriptCompile Include="index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -154,6 +155,7 @@
     <TypeScriptCompile Include="modules\commands\queue.ts" />
     <TypeScriptCompile Include="modules\commands\skip.ts" />
     <TypeScriptCompile Include="modules\commands\stop.ts" />
+    <TypeScriptCompile Include="modules\commands\urban.ts" />
     <TypeScriptCompile Include="modules\commands\volume.ts" />
     <TypeScriptCompile Include="modules\commands\weather.ts" />
     <TypeScriptCompile Include="modules\essentials\canvas.ts" />
@@ -165,11 +167,11 @@
     <Folder Include="dist\data\attachments\error\" />
     <Folder Include="dist\data\fonts\" />
     <Folder Include="dist\data\attachments\" />
-    <Folder Include="dist\audio\" />
-    <Folder Include="dist\cache\" />
+    <Folder Include="dist\data\languages\" />
     <Folder Include="modules\" />
     <Folder Include="modules\commands\" />
     <Folder Include="modules\essentials\" />
+    <Folder Include="dev\" />
     <Folder Include="_test\" />
     <Folder Include="_test\imageprocessor\" />
   </ItemGroup>

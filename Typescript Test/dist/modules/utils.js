@@ -23,7 +23,7 @@ exports.TextEncodings = {
     graveAccent: "\u0060",
     whiteSpace: "\u200b"
 };
-exports.Prefix = ".oktay";
+exports.Prefix = ";ok";
 // ================= Permissions =================
 const permissionsFile = fs_1.default.readFileSync(path_1.default.join(__dirname, "../../", "bot.permissions.json"), { encoding: "utf-8" });
 const formattedFile = JSON.parse((0, stripJson_1.stripJsonComments)(permissionsFile));

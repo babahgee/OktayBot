@@ -53,7 +53,7 @@ export const TextEncodings: ITextEncodings = {
     whiteSpace: "\u200b"
 }
 
-export const Prefix: string = ".oktay"; 
+export const Prefix: string = ";ok"; 
 
 
 // ================= Permissions =================

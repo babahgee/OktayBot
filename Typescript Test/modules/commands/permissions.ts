@@ -23,7 +23,7 @@ export async function Execute(message: Message, commandArguments: Array<string>,
 
     const argFormat: Array<string> = commandArguments[0].replace(" ", "").split(" ");
 
-    if (typeof argFormat[1] === "undefined" || argFormat[1] === "") return message.channel.send("Kan machtigings token niet toevoegen omdat er geen token is opgenoemd.");
+   //  if (typeof argFormat[1] === "undefined" || argFormat[1] === "") return message.channel.send("Kan machtigings token niet toevoegen omdat er geen token is opgenoemd.");
 
     const keyword: string = argFormat[0];
     const token: string = argFormat[1];
@@ -47,6 +47,9 @@ export async function Execute(message: Message, commandArguments: Array<string>,
 
             if (!AllPermissions.tokens.includes(token)) AllPermissions.tokens.push(token);
 
+            embed.title = "Permissie token toegevoegd.";
+            embed.description = `Permissie token ${token} is zojuist toegevoegd aan het register.`;
+
             break;
         case "remove":
 
@@ -54,8 +57,13 @@ export async function Execute(message: Message, commandArguments: Array<string>,
                 if (token === _token) AllPermissions.tokens.splice(index, 1);
             });
 
+            embed.title = "Permissie token verwijderdd.";
+            embed.description = `Permissie token ${token} is zojuist verwijderd van het register.`;
+
             break;
     }
+
+	console.log(keyword);
 
     embed.addField("Bot machtigingen", CodeFormatTokens().join(""));
 

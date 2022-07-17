@@ -61,8 +61,8 @@ export async function Execute(message: Message, commandArguments: Array<string>,
     embed.addField("Bot (interne) rechten", CodeFormatTokens().join(""));
     embed.addField(TextEncodings.whiteSpace, TextEncodings.whiteSpace);
     embed.addField("Bot repository link", "https://github.com/babahgee/OktayBot");
-    embed.addField("Repository committer", repoInfo.committer);
-    embed.addField("Repository committer date", repoInfo.committerDate);
+    embed.addField("Repository committer", typeof repoInfo.committer === "string" ? repoInfo.committer : "Geen informatie gevonden.");
+    embed.addField("Repository committer date", typeof repoInfo.committerDate === "string" ? repoInfo.committerDate : "Geen informatie gevonden.");
 
 
     message.channel.send({ embeds: [embed] });

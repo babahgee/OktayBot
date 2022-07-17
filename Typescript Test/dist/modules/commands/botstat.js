@@ -67,8 +67,8 @@ function Execute(message, commandArguments, client, player) {
         embed.addField("Bot (interne) rechten", (0, utils_1.CodeFormatTokens)().join(""));
         embed.addField(utils_1.TextEncodings.whiteSpace, utils_1.TextEncodings.whiteSpace);
         embed.addField("Bot repository link", "https://github.com/babahgee/OktayBot");
-        embed.addField("Repository committer", repoInfo.committer);
-        embed.addField("Repository committer date", repoInfo.committerDate);
+        embed.addField("Repository committer", typeof repoInfo.committer === "string" ? repoInfo.committer : "Geen informatie gevonden.");
+        embed.addField("Repository committer date", typeof repoInfo.committerDate === "string" ? repoInfo.committerDate : "Geen informatie gevonden.");
         message.channel.send({ embeds: [embed] });
     });
 }

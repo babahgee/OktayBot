@@ -56,17 +56,57 @@ const player = new DiscordPlayer.Player(client, {
     ytdlOptions: {
         quality: "highestaudio",
         highWaterMark: 1 << 25,
-    }
+    },
+    connectionTimeout: 10000
+});
+let lastMessageGuild;
+player.on("trackStart", function (queue, track) {
+    var _a;
+    const embed = new DiscordJS.MessageEmbed({
+        title: `Speelt '${track.title}' af`,
+        description: `_${track.title}_ van _${track.author}_ word nu afgespeeld.`,
+        thumbnail: {
+            url: track.thumbnail
+        },
+        footer: {
+            text: `Opgevraagd door '${track.requestedBy.username}'`
+        }
+    });
+    (_a = client.user) === null || _a === void 0 ? void 0 : _a.setPresence({
+        status: "online",
+        activities: [{
+                name: track.title,
+                url: track.url,
+                type: "LISTENING",
+            }]
+    });
+    if (typeof lastMessageGuild !== "undefined")
+        lastMessageGuild.channel.send({ embeds: [embed] });
+});
+player.on("queueEnd", function (queue) {
+    var _a;
+    (_a = client.user) === null || _a === void 0 ? void 0 : _a.setPresence({
+        status: "online",
+        activities: [{
+                name: `Mijn prefix is ${utils_1.Prefix}`,
+                type: "PLAYING",
+            }]
+    });
 });
 const commands = FS.readdirSync(Path.join(__dirname, "modules", "commands"), { encoding: "utf-8" });
-function createInvalidCommandEmbedMessage() {
+function createInvalidCommandEmbedMessage(command) {
     const msg = new DiscordJS.MessageEmbed();
+    const possibleCommands = [];
+    commands.forEach(function (cmd) {
+        if (cmd.indexOf(command) > -1)
+            possibleCommands.push("``" + `${utils_1.Prefix} ${cmd.split(".js")[0]}` + "``");
+    });
     msg.setColor("RANDOM");
     msg.setTimestamp();
     if (client.user !== null)
         msg.setAuthor(client.user.username, client.user.displayAvatarURL());
     msg.setTitle("Onbekende opdracht");
-    msg.setDescription(`De ingevoerde opdracht bestaat niet in mijn codebase. Voer ${utils_1.Prefix} help uit om te zien tot welke opdrachten ter beschikking zijn.`);
+    msg.setDescription(`De ingevoerde opdracht bestaat niet in mijn codebase. Voer ${utils_1.Prefix} help uit om te zien tot welke opdrachten ter beschikking zijn.\n\n Bedoel je misschien ${possibleCommands.join(", ")}`);
     return msg;
 }
 function createNoGivenCommandEmbedMessage() {
@@ -96,12 +136,13 @@ client.on("messageCreate", function (message) {
         }
         if (!commands.includes(command + ".js")) {
             console.log(`User '${message.author.username}' tried executing a non-existing command '${command}' at ${new Date()}`.yellow);
-            message.channel.send({ embeds: [createInvalidCommandEmbedMessage()] });
+            message.channel.send({ embeds: [createInvalidCommandEmbedMessage(command)] });
             return;
         }
         const commandExecution = yield Promise.resolve().then(() => __importStar(require(Path.join(__dirname, "modules", "commands", command + ".js"))));
         try {
             yield commandExecution.Execute(message, commandArguments, client, player);
+            lastMessageGuild = message;
         }
         catch (err) {
             const error = err;

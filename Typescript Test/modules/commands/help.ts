@@ -78,7 +78,7 @@ export async function Execute(message: Message, commandArguments: Array<string>,
     embedMessage.setTitle(`${Prefix} ${dict.command}`);
     embedMessage.setDescription(dict.description);
 
-    if (dict.keyword) embedMessage.description += ` Het uitvoeren van deze opdracht werkt als volgt: ${TextEncodings.graveAccent}${Prefix} ${dict.command} [${dict.keyword}] [argumenten indien beschikbaar]${TextEncodings.graveAccent}`;
+    if (dict.keyword) embedMessage.description += ` Het uitvoeren van deze opdracht werkt als volgt: ${TextEncodings.graveAccent}${TextEncodings.graveAccent}${TextEncodings.graveAccent}${Prefix} ${dict.command} [${dict.keyword}] [argumenten?]${TextEncodings.graveAccent}${TextEncodings.graveAccent}${TextEncodings.graveAccent}`;
 
     if (dict.arguments) {
 

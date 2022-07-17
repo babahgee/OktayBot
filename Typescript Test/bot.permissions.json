@@ -1,31 +1,20 @@
 {
-  // Main bot permissions
-  "permissions": {
-
-    "command_execution_whitelist": [
-      "326821148782231553",
-      "370128159036932096"
-    ],
-
-    // Whitelist with website urls that allows the bot to read data from.
-    "https_whitelist": [
-      "https://google.com",
-      "https://youtube.com",
-      "https://genius.com"
-    ],
-
-    // General tokens that allows the bot to do certain things.
-    "tokens": [
-      "bot.permission.playLocalAudio", // Allows the bot to play audio from the device that the bot is running on.
-      "bot.permission.playStreamAudio", // Allows the bot to play audio from a certain stream source like Spotify, YouTube etc.
-      "bot.permission.readFiles", // Allows the bot to read data files stored in the source code directory of the bot itself. This does not allow the bot to read data outside the directory.
-      "bot.permission.readProcessData" // Allows the bot to read data from the main process.
-
-      // "bot.permission.allowEval" // Allows the bot to execute eval function from Discord. Warning: This command can be used for shady purposes. Pay close attention to what you do.
-      // "bot.permissions.useAI" // Allows the bot to use AI kind of features to interact with Discord users. This permission is by default disabled, uncomment this permission to use it's features.
-      // "bot.permission.readMemberData" // Allows the bot to read member data such as when the member joined, it's profile and related networks.
-      // "bot.permission.useAdminCommands" // Allows the bot to execute administrative commands such as kicking or banning members, moving members from channels and more.
-    ]
-
-  }
+   "permissions": {
+      "command_execution_whitelist": [
+         "326821148782231553",
+         "370128159036932096"
+      ],
+      "https_whitelist": [
+         "https://google.com",
+         "https://youtube.com",
+         "https://genius.com"
+      ],
+      "tokens": [
+         "bot.permission.playLocalAudio",
+         "bot.permission.playStreamAudio",
+         "bot.permission.readFiles",
+         "bot.permission.readProcessData",
+         "nigger"
+      ]
+   }
 }

@@ -100,7 +100,7 @@ function Execute(message, commandArguments, client, player) {
         embedMessage.setTitle(`${utils_1.Prefix} ${dict.command}`);
         embedMessage.setDescription(dict.description);
         if (dict.keyword)
-            embedMessage.description += ` Het uitvoeren van deze opdracht werkt als volgt: ${utils_1.TextEncodings.graveAccent}${utils_1.Prefix} ${dict.command} [${dict.keyword}] [argumenten indien beschikbaar]${utils_1.TextEncodings.graveAccent}`;
+            embedMessage.description += ` Het uitvoeren van deze opdracht werkt als volgt: ${utils_1.TextEncodings.graveAccent}${utils_1.TextEncodings.graveAccent}${utils_1.TextEncodings.graveAccent}${utils_1.Prefix} ${dict.command} [${dict.keyword}] [argumenten?]${utils_1.TextEncodings.graveAccent}${utils_1.TextEncodings.graveAccent}${utils_1.TextEncodings.graveAccent}`;
         if (dict.arguments) {
             dict.arguments.forEach(function (arg) {
                 embedMessage.addField(utils_1.TextEncodings.whiteSpace, "-" + arg, true);

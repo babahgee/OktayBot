@@ -1,0 +1,13 @@
+{
+  "client": {
+    "presence": {
+      "acctivityName": "Mijn prefix is ${Prefix}"
+    }
+  },
+  "main": {
+    "INVALID_COMMAND": "Onbekende opdracht.",
+    "INVALID_COMMAND_DESCRIPTION": "`De ingevoerde opdracht bestaat niet in mijn codebase. Voer ${Prefix} help uit om te zien tot welke opdrachten ter beschikking zijn.",
+    "NO_GIVEN_COMMAND": "Geen opgegeven opdracht.",
+    "NO_GIVEN_COMMAND_DETAILS": "Er zijn geen opdrachten ingevoerd. Voer ${Prefix} help uit om te zien tot welke opdrachten ter beschikking zijn.",
+  }
+}

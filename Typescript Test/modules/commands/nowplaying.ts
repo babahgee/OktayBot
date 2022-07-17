@@ -29,8 +29,6 @@ export async function Execute(message: Message, commandArguments: Array<string>,
 
     if (message.guild === null) return;
 
-    console.log(commandArguments);
-
     const queue: Queue = player.getQueue(message.guild.id);
 
     if (!queue || !queue.playing) return message.channel.send(`Momenteel worden er geen nummers afgespeeld!`);

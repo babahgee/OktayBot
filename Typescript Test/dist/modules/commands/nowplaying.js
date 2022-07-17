@@ -31,7 +31,6 @@ function Execute(message, commandArguments, client, player) {
     return __awaiter(this, void 0, void 0, function* () {
         if (message.guild === null)
             return;
-        console.log(commandArguments);
         const queue = player.getQueue(message.guild.id);
         if (!queue || !queue.playing)
             return message.channel.send(`Momenteel worden er geen nummers afgespeeld!`);
