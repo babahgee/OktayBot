@@ -149,15 +149,14 @@
     <TypeScriptCompile Include="modules\commands\help.ts" />
     <TypeScriptCompile Include="modules\commands\lyrics.ts" />
     <TypeScriptCompile Include="modules\commands\nowplaying.ts" />
-    <TypeScriptCompile Include="modules\commands\oktay.ts" />
     <TypeScriptCompile Include="modules\commands\permissions.ts" />
     <TypeScriptCompile Include="modules\commands\play.ts" />
     <TypeScriptCompile Include="modules\commands\queue.ts" />
     <TypeScriptCompile Include="modules\commands\skip.ts" />
+    <TypeScriptCompile Include="modules\commands\steamapp.ts" />
     <TypeScriptCompile Include="modules\commands\stop.ts" />
     <TypeScriptCompile Include="modules\commands\urban.ts" />
     <TypeScriptCompile Include="modules\commands\volume.ts" />
-    <TypeScriptCompile Include="modules\commands\weather.ts" />
     <TypeScriptCompile Include="modules\essentials\canvas.ts" />
     <TypeScriptCompile Include="modules\utils.ts" />
   </ItemGroup>
